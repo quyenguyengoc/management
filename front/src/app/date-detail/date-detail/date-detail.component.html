@@ -1,0 +1,2 @@
+<app-events-list [source]="modalData.selectedDate.events" (onSelectEvent)="selectEvent($event)"></app-events-list>
+<app-event-form [currentEvent]="modalData.currentEvent" (onToggleMemo)="toggleMemo($event)"></app-event-form>

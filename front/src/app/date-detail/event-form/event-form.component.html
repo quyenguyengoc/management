@@ -1,0 +1,62 @@
+<form class="row">
+  <div class="col-sm-3 col-xs-6">
+    <div class="form-group">
+      <select class="form-control" [(ngModel)]="currentEvent.type" name="eventType">
+        <option value="" disabled>Type</option>
+        <option *ngFor="let type of EVENTTYPES;" [textContent]="type.name"></option>
+      </select>
+    </div>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="currentEvent.title" placeholder="Title" name="title">
+    </div>
+  </div>
+  <div class="col-sm-6 col-xs-12">
+    <div class="row" *ngFor="let memo of currentEvent.memo; let last = last; let i = index;">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.content" placeholder="Content" name="content-{{i}}">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.price" placeholder="Price" name="price-{{i}}"
+            (blur)="updateMemoPrice(memo)">
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <button class="btn btn-warning" type="button" (click)="toggleMemo(i, 'undo')" *ngIf="memo.isDestroy">
+            <i class="fa fa-undo"></i>
+          </button>
+          <button class="btn btn-danger" type="button" (click)="toggleMemo(i, 'remove')" *ngIf="!memo.isDestroy">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group" *ngIf="last">
+          <button class="btn btn-success" type="button" (click)="toggleMemo(i, 'add')">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 text-right font-weight-bold" *ngIf="!!currentEvent.price">
+        <h3 [textContent]="currentEvent.price"></h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 mt-5 offset-md-6">
+    <div class="form-group">
+      <button type="button" class="btn btn-block btn-warning" disabled (click)="reset()">Reset</button>
+    </div>
+  </div>
+  <div class="col-sm-3 mt-5">
+    <div class="form-group">
+      <button type="button" class="btn btn-block btn-outline-info" (click)="saveEvent()">Save</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,3 @@
+<div class="table table-responsive smart-table" *ngIf="events">
+  <ng2-smart-table [settings]="HEADERS" [source]="events" (userRowSelect)="selectEvent($event)"></ng2-smart-table>
+</div>
