@@ -1,0 +1,46 @@
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h4 class="modal-title"><strong [textContent]="cloneModalData.selectedDate.date"></strong></h4>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <app-date-detail [modalData]="cloneModalData" (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)" (onSaveEvent)="saveEvent()"></app-date-detail>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary waves-effect" (click)="close()">Close</button>
+  </div>
+</ng-template>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="">
+        <div class="row">
+          <div class="col-lg-3 border-right pr-0">
+            <div class="card-body border-bottom">
+              <h4 class="card-title mt-2">Drag & Drop Event</h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="javascript:void(0)" class="btn mt-3 btn-info btn-block waves-effect waves-light" (click)="dateDetail()">
+                    <i class="ti-plus"></i> Add New Event
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="card-body b-l calender-sidebar">
+              <app-calendar (dateClick)="dateDetail($event)">
+              </app-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

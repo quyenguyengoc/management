@@ -1,3 +1,22 @@
-<router-outlet>
-  <app-spinner></app-spinner>
-</router-outlet>
+<div id="main-wrapper" [ngClass]="{'show-sidebar': showMobileMenu}" [dir]="options.dir"
+  [attr.data-theme]="options.theme" [attr.data-layout]="options.layout"
+  [attr.data-sidebartype]="options.sidebartype" [attr.data-sidebar-position]="options.sidebarpos"
+  [attr.data-header-position]="options.headerpos" [attr.data-boxed-layout]="options.boxed">
+  <app-header [options]="options" [defaultSidebar]="defaultSidebar"
+    [showMobileMenu]="showMobileMenu" [expandLogo]="expandLogo">
+  </app-header>
+  <aside class="left-sidebar" [attr.data-sidebarbg]="options.sidebarbg"
+    (mouseover)="toggleLogo()" (mouseout)="toggleLogo()">
+    <div class="scroll-sidebar" [perfectScrollbar]="config">
+      <app-sidebar></app-sidebar>
+    </div>
+  </aside>
+  <div class="page-wrapper">
+    <app-breadcrumb></app-breadcrumb>
+    <div class="container-fluid">
+      <app-spinner></app-spinner>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-customizer [options]="options"></app-customizer>
+</div>
