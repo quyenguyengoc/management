@@ -1,9 +1,7 @@
 import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  CommonModule
-} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -30,6 +28,9 @@ import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { EventFormComponent } from './date-detail/event-form/event-form.component';
 import { EventsListComponent } from './date-detail/events-list/events-list.component';
 import { DateDetailComponent } from './date-detail/date-detail/date-detail.component';
+
+import { ApiService } from './services/api/api.service';
+import { DateCellsService } from './services/date-cells.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -60,13 +61,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     PerfectScrollbarModule,
     FullCalendarModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    HttpClientModule
   ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    },
+    ApiService,
+    DateCellsService
   ],
   bootstrap: [AppComponent]
 })

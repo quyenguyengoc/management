@@ -1,7 +1,8 @@
 class DateCell < ApplicationRecord
-  attr_reader :eating_cost, :other_cost
 
   has_many :events, foreign_key: :date_cell_id, class_name: 'EventDate', dependent: :destroy
+
+  has_many :memos, through: :events
 
   def eating_cost
     events.eating.sum(&:price)
@@ -9,5 +10,11 @@ class DateCell < ApplicationRecord
 
   def other_cost
     events.other.sum(&:price)
+  end
+
+  class << self
+    def date_in_month(date_range)
+      where('date_cell IN (?)', date_range)
+    end
   end
 end

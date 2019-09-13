@@ -4,6 +4,6 @@ class CreateDateCell < ActiveRecord::Migration[5.2]
       t.date :date_cell, null: false
     end
 
-    DateCell.create([*Date.current.beginning_of_month..Date.current.end_of_month].map{ |date| { date_cell: date} })
+    DateCell.create([*Date.current.beginning_of_year..Date.current.end_of_year].map{ |date| { date_cell: date} })
   end
 end
