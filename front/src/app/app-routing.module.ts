@@ -16,7 +16,7 @@ const routes: Routes = [
       title: 'Dashboard'
     },
     resolve: {
-      dateCells: DateCellsResolver
+      response: DateCellsResolver
     }
   }
 ];

@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 
 import { DateCell } from '../class/calendar/date-cell';
 import { EventDate } from '../class/calendar/event-date';
@@ -25,7 +24,7 @@ export class DashboardComponent implements OnInit {
     selectedDate: DateCell;
   }
 
-  constructor(private router: Router, private modal: NgbModal) { }
+  constructor(private modal: NgbModal) { }
 
   dateDetail(dateCell) {
     let selectedDate = dateCell || new DateCell({  date: new Date() });
@@ -52,14 +51,6 @@ export class DashboardComponent implements OnInit {
         this.cloneModalData.currentEvent.price += this.cloneModalData.currentEvent.memo[event.index].price * 1;
         break;
     };
-  }
-
-  saveEvent() {
-    if (!!!this.modalData.currentEvent.id) {
-      this.cloneModalData.selectedDate.events.push(this.modalData.currentEvent);
-    } else {
-      Object.assign(this.cloneModalData.selectedDate.events.find(event => event.id === this.cloneModalData.currentEvent.id));
-    }
   }
 
   ngOnInit() {}

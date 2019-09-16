@@ -3,6 +3,8 @@ class EventDate < ApplicationRecord
   belongs_to :date_cell
   has_many :memo_details, foreign_key: :event_date_id, class_name: 'EventMemo', dependent: :destroy
 
+  accepts_nested_attributes_for :memo_details
+
   validates :title, :cost_type, presence: true
   validates :price, numericality: true
 
