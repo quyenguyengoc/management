@@ -11,7 +11,7 @@ import { EventDate } from '../../class/calendar/event-date';
 })
 export class EventsListComponent implements OnInit {
 
-  events: LocalDataSource;
+  events: any = undefined;
 
   HEADERS: object = HEADERS;
 
@@ -28,6 +28,8 @@ export class EventsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.events = new LocalDataSource(this.source.filter( event => event.available ));
+    if (this.source) {
+      this.events = new LocalDataSource(this.source.filter( event => event.available ));
+    }
   }
 }

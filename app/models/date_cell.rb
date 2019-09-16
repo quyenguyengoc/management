@@ -4,6 +4,8 @@ class DateCell < ApplicationRecord
 
   has_many :memos, through: :events
 
+  accepts_nested_attributes_for :events
+
   def eating_cost
     events.eating.sum(&:price)
   end

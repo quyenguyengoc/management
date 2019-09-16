@@ -1,9 +1,10 @@
 import { EventDate } from './event-date';
 
 export class DateCell {
+  id: number;
   date: Date;
-  eatingCost: number;
-  otherCost: number;
+  eatingCost: number = 0;
+  otherCost: number = 0;
   events: EventDate[];
 
   constructor(values: Object = {}) {

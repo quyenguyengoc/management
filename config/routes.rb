@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  mount APIS::API::Base, at: '/'
+  namespace :api do
+    namespace :v1 do
+      get 'dashboard', to: 'dashboard#index'
+    end
+  end
 end

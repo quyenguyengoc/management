@@ -68,24 +68,28 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.route.data
-      .map((data) => data['dateCells'])
+      .map((data) => data['response'])
       .subscribe(
-        (dateCells) => {
-          this.visibleRange = { start: dateCells[0].date, end: dateCells[dateCells.length - 1].date }
-          this.dateCells = dateCells.map((dateCell, index) => {
+        (response) => {
+          this.visibleRange = response.visible_range;
+          this.dateCells = response.dates.data.map((item) => {
             return new DateCell({
-              id: dateCell.id,
-              date: new Date(dateCell.date),
-              eatingCost: dateCell.eating_cost,
-              otherCost: dateCell.other_cost,
-              events: dateCell.events.map((event) => {
+              id: item.id,
+              date: new Date(item.attributes.date),
+              eatingCost: item.attributes.eating_cost,
+              otherCost: item.attributes.other_cost,
+              events: item.attributes.events.map((event) => {
                 return new EventDate({
-                  id: event.id,
-                  title: event.title,
-                  price: event.price,
-                  type: event.type === 'eating' ? 'Eating' : 'Other',
-                  memo: event.memo.map((memo) => {
-                    return new EventMemo(memo)
+                  id: event.data.id,
+                  title: event.data.attributes.title,
+                  price: event.data.attributes.price,
+                  type: event.data.attributes.cost_type === 'eating' ? 'Eating' : 'Other',
+                  memo: event.data.attributes.memo.map((memo) => {
+                    return new EventMemo({
+                      id: memo.data.id,
+                      content: memo.data.attributes.content,
+                      price: memo.data.attributes.price
+                    })
                   })
                 })
               })
