@@ -1,12 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+date = Date.current
+start_at = date.change(day: 10)
+range_start_at = date < start_at ? start_at.change(month: start_at.month - 1) : start_at
+range_end_at = start_at.change({ month: start_at.month + 1, day: 9 })
 
-DateCell.all.each do |date_cell|
+
+DateCell.date_in_month([*range_start_at..range_end_at]).each do |date_cell|
   [*1...5].sample.times do |i|
     event_date = date_cell.events.new( { title: Faker::Book.title, cost_type: [:eating, :other].sample } )
     memo_details = []
