@@ -72,23 +72,23 @@ export class CalendarComponent implements OnInit {
       .subscribe(
         (response) => {
           this.visibleRange = response.visible_range;
-          this.dateCells = response.dates.data.map((item) => {
+          this.dateCells = response.dates.map((date) => {
             return new DateCell({
-              id: item.id,
-              date: new Date(item.attributes.date),
-              eatingCost: item.attributes.eating_cost,
-              otherCost: item.attributes.other_cost,
-              events: item.attributes.events.map((event) => {
+              id: date.id,
+              date: new Date(date.date),
+              eatingCost: date.eating_cost,
+              otherCost: date.other_cost,
+              events: date.events.map((event) => {
                 return new EventDate({
-                  id: event.data.id,
-                  title: event.data.attributes.title,
-                  price: event.data.attributes.price,
-                  type: event.data.attributes.cost_type === 'eating' ? 'Eating' : 'Other',
-                  memo: event.data.attributes.memo.map((memo) => {
+                  id: event.id,
+                  title: event.title,
+                  price: event.price,
+                  type: event.cost_type === 'eating' ? 'Eating' : 'Other',
+                  memo: event.memo.map((memo) => {
                     return new EventMemo({
-                      id: memo.data.id,
-                      content: memo.data.attributes.content,
-                      price: memo.data.attributes.price
+                      id: memo.id,
+                      content: memo.content,
+                      price: memo.price
                     })
                   })
                 })

@@ -2,10 +2,9 @@ class Api::V1::DashboardController < ApplicationController
 
   def index
     visible_range = date_range(Date.current)
-    date_cells = DateCell.includes(events: :memo_details).date_in_month(visible_range)
     render json: {
       visible_range: { start: visible_range.first, end: visible_range.last },
-      dates: DateCellSerializer.new(date_cells).serializable_hash
+      dates: DateCell.includes(events: :memo_details).date_in_month(visible_range).map(&:to_json)
     }
   end
 

@@ -14,6 +14,16 @@ class DateCell < ApplicationRecord
     events.other.sum(&:price)
   end
 
+  def to_json
+    {
+      id: id,
+      date: date_cell,
+      events: events.map(&:to_json),
+      eating_cost: eating_cost,
+      other_cost: other_cost
+    }
+  end
+
   class << self
     def date_in_month(date_range)
       where('date_cell IN (?)', date_range)

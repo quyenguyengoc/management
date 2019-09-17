@@ -4,4 +4,12 @@ class EventMemo < ApplicationRecord
 
   validates :content, presence: true
   validates :price, numericality: true
+
+  def to_json
+    {
+      id: id,
+      content: content,
+      price: price
+    }
+  end
 end
