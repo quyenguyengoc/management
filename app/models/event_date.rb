@@ -15,4 +15,14 @@ class EventDate < ApplicationRecord
   def set_price
     self.price = memo_details.sum(&:price)
   end
+
+  def to_json
+    {
+      id: id,
+      title: title,
+      price: price,
+      memo: memo_details.map(&:to_json),
+      cost_type: cost_type
+    }
+  end
 end
