@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { DateCell } from '../../class/calendar/date-cell';
+import { DateCell } from '../../../class/calendar/date-cell';
 
 const API_URL = environment.apiUrl;
 
@@ -20,7 +20,13 @@ export class ApiService {
 
   public getCalendarData(): Observable<DateCell[]> {
     return this.http
-      .get<DateCell[]>(API_URL + '/dashboard')
+      .get<DateCell[]>(API_URL + '/date_cells')
+      .catch(this.handleError);
+  }
+
+  public getEventsByDate(id: number): Observable<any> {
+    return this.http
+      .get<any>(API_URL + '/date_cells/' + id)
       .catch(this.handleError);
   }
 

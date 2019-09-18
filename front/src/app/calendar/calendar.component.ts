@@ -1,14 +1,13 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Calendar } from '@fullcalendar/core';
-import { ActivatedRoute } from '@angular/router';
 
 import * as $ from 'jquery';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
+import { FormatService } from '../services/common/format.service';
+
 import { DateCell } from '../class/calendar/date-cell';
-import { EventDate } from '../class/calendar/event-date';
-import { EventMemo } from '../class/calendar/event-memo';
 
 @Component({
   selector: 'app-calendar',
@@ -16,6 +15,11 @@ import { EventMemo } from '../class/calendar/event-memo';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+
+  @Input() calendarData: {
+    visibleRange: { start: string, end: string },
+    data: DateCell[]
+  };
 
   @Output()
   dateClick: EventEmitter<any[]> = new EventEmitter();
@@ -27,30 +31,26 @@ export class CalendarComponent implements OnInit {
 
   calendar: Calendar;
 
-  visibleRange: {
-    start: string, end: string
-  };
-
   dateCells: DateCell[] = [
   ];
 
 
-  initCalendar(element) {
+  initCalendar(element: any) {
     this.calendar = new Calendar(element, {
       plugins: this.calendarPlugins,
       defaultView: 'dayGridMonth',
-      visibleRange: this.visibleRange,
+      visibleRange: this.calendarData.visibleRange,
       dayRender: this.dayRender.bind(this)
     });
   }
 
   dateDetail(dateCell, type) {
-    let events = dateCell.events.filter(event => event.type === type)
+    // let events = dateCell.events.filter(event => event.type === type)
     this.dateClick.emit(dateCell);
   }
 
-  dayRender(dayRenderInfo) {
-    let dateCell = this.dateCells.find(dateCell => dateCell.date.setHours(0,0,0,0) === dayRenderInfo.date.getTime());
+  dayRender(dayRenderInfo: any) {
+    let dateCell = this.calendarData.data.find(dateCell => dateCell.date === this.onlyDate(dayRenderInfo.date));
     if (dateCell) {
       $(dayRenderInfo.el).html(`
         <div class="row m-0">
@@ -64,40 +64,13 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute) { }
+  onlyDate(date: Date) {
+    return this.format.date(date, 'yyyy-MM-dd');
+  }
+
+  constructor(private format: FormatService) { }
 
   ngOnInit() {
-    this.route.data
-      .map((data) => data['response'])
-      .subscribe(
-        (response) => {
-          this.visibleRange = response.visible_range;
-          this.dateCells = response.dates.map((date) => {
-            return new DateCell({
-              id: date.id,
-              date: new Date(date.date),
-              eatingCost: date.eating_cost,
-              otherCost: date.other_cost,
-              events: date.events.map((event) => {
-                return new EventDate({
-                  id: event.id,
-                  title: event.title,
-                  price: event.price,
-                  type: event.cost_type === 'eating' ? 'Eating' : 'Other',
-                  memo: event.memo.map((memo) => {
-                    return new EventMemo({
-                      id: memo.id,
-                      content: memo.content,
-                      price: memo.price
-                    })
-                  })
-                })
-              })
-            })
-          });
-        }
-      )
-
     var calendarEl = document.getElementById('calendar');
 
     this.initCalendar(calendarEl);

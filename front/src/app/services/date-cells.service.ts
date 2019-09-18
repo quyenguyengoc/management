@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ApiService } from './api/api.service';
+import { ApiService } from './api/date-cells/api.service';
 
 import { DateCell } from '../class/calendar/date-cell';
 
@@ -13,5 +13,9 @@ export class DateCellsService {
 
   getData(): Observable<DateCell[]> {
     return this.api.getCalendarData()
+  }
+
+  getEvents(id: number): Observable<any> {
+    return this.api.getEventsByDate(id);
   }
 }

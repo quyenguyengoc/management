@@ -12,6 +12,7 @@ DateCell.date_in_month([*range_start_at..range_end_at]).each do |date_cell|
       memo_details << {
         content: Faker::Lorem.sentence,
         price: [*1..50].sample * 10000,
+        payer_id: [*0..2].sample,
         event: event_date
       }
     end

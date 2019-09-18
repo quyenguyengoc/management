@@ -4,7 +4,7 @@ class DateCell < ApplicationRecord
 
   has_many :memos, through: :events
 
-  accepts_nested_attributes_for :events
+  accepts_nested_attributes_for :events, allow_destroy: true
 
   def eating_cost
     events.eating.sum(&:price)
@@ -22,6 +22,10 @@ class DateCell < ApplicationRecord
       eating_cost: eating_cost,
       other_cost: other_cost
     }
+  end
+
+  def include_events
+    to_json.merge({ events: events.map(&:to_json) })
   end
 
   class << self

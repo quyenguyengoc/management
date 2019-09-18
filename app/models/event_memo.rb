@@ -9,7 +9,8 @@ class EventMemo < ApplicationRecord
     {
       id: id,
       content: content,
-      price: price
+      price: price,
+      payer_id: payer_id
     }
   end
 end

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 
 import { HEADERS } from '../date-detail-header';
 
@@ -11,11 +10,9 @@ import { EventDate } from '../../class/calendar/event-date';
 })
 export class EventsListComponent implements OnInit {
 
-  events: any = undefined;
-
   HEADERS: object = HEADERS;
 
-  @Input() source: EventDate[];
+  @Input() source: any;
 
   @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
 
@@ -27,9 +24,5 @@ export class EventsListComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
-    if (this.source) {
-      this.events = new LocalDataSource(this.source.filter( event => event.available ));
-    }
-  }
+  ngOnInit() {}
 }
