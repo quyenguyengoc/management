@@ -1,11 +1,9 @@
 import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +27,7 @@ import { EventFormComponent } from './date-detail/event-form/event-form.componen
 import { EventsListComponent } from './date-detail/events-list/events-list.component';
 import { DateDetailComponent } from './date-detail/date-detail/date-detail.component';
 
-import { ApiService } from './services/api/api.service';
+import { ApiService } from './services/api/date-cells/api.service';
 import { DateCellsService } from './services/date-cells.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -69,6 +67,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
+    DatePipe,
     ApiService,
     DateCellsService
   ],

@@ -16,15 +16,15 @@ export class DateDetailComponent implements OnInit {
 
   @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
 
-  @Output() onToggleMemo: EventEmitter<{ index: number, action: string}> = new EventEmitter();
+  @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
 
   constructor() { }
 
-  selectEvent(event) {
+  selectEvent(event: EventDate) {
     this.onSelectEvent.emit(event);
   }
 
-  toggleMemo(event) {
+  toggleMemo(event: { index: number, action: string }) {
     this.onToggleMemo.emit(event);
   }
 

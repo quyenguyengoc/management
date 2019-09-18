@@ -35,7 +35,7 @@
 
           <div class="col-lg-9">
             <div class="card-body b-l calender-sidebar">
-              <app-calendar (dateClick)="dateDetail($event)">
+              <app-calendar [calendarData]="calendarData" (dateClick)="dateDetail($event)">
               </app-calendar>
             </div>
           </div>

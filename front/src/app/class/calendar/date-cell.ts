@@ -1,21 +1,21 @@
-import { EventDate } from './event-date';
+import { LocalDataSource } from 'ng2-smart-table';
 
 export class DateCell {
   id: number;
-  date: Date;
+  date: string;
   eatingCost: number = 0;
   otherCost: number = 0;
-  events: EventDate[];
+  events: LocalDataSource;
 
   constructor(values: Object = {}) {
     Object.assign(this, values)
   }
 
-  price(budget) {
+  price(budget: number) {
     return budget - this.eatingCost;
   }
 
-  cssForPrice(budget) {
+  cssForPrice(budget: number) {
     if (this.eatingCost > budget) {
       return 'bg-danger';
     } else if (this.eatingCost < budget) {

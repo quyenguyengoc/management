@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_104701) do
     t.string "content", null: false
     t.decimal "price", precision: 10, default: "0"
     t.integer "event_date_id"
+    t.integer "payer_id", default: 0
   end
 
 end

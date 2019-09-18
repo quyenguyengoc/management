@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { EVENTTYPES } from '../../shared/event-types';
 
+import { PAYERIDS } from '../../shared/payer-ids';
+
 import { EventDate } from '../../class/calendar/event-date';
 
 @Component({
@@ -13,22 +15,24 @@ export class EventFormComponent implements OnInit {
 
   EVENTTYPES = EVENTTYPES;
 
+  PAYERIDS = PAYERIDS;
+
   @Input() currentEvent: EventDate;
 
   @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
 
   @Output() onSaveEvent = new EventEmitter();
 
-  toggleMemo(index, action) {
+  toggleMemo(index: number, action: string) {
     this.onToggleMemo.emit({ index: index, action: action });
   }
 
-  updateMemoPrice(memo) {
+  updateMemoPrice() {
     let price = 0;
     this.currentEvent.memo.forEach(function(memo) {
       price += memo.isDestroy ? 0 : memo.price*1;
     });
-    if (price > 0) { this.currentEvent.price = price };
+    this.currentEvent.price = price
   }
 
   saveEvent() {

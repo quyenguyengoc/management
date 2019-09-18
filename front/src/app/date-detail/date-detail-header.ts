@@ -1,3 +1,5 @@
+import { EVENTTYPES } from '../shared/event-types';
+
 export const HEADERS = {
   columns: {
     title: {
@@ -10,7 +12,8 @@ export const HEADERS = {
     },
     type: {
       title: 'Type',
-      filter: false
+      filter: false,
+      valuePrepareFunction: (value: number) => { return EVENTTYPES[value] }
     }
   },
   actions: {
