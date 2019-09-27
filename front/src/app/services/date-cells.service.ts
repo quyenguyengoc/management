@@ -18,4 +18,8 @@ export class DateCellsService {
   getEvents(id: number): Observable<any> {
     return this.api.getEventsByDate(id);
   }
+
+  saveDate(id: number, date_cell: any): Observable<any> {
+    return this.api.saveDate(id, date_cell);
+  }
 }

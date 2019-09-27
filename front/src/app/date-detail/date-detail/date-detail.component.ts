@@ -9,15 +9,14 @@ import { EventDate } from '../../class/calendar/event-date';
 })
 export class DateDetailComponent implements OnInit {
 
-  @Input() modalData: {
-    currentEvent: EventDate;
-    selectedDate: DateCell;
-  };
+  @Input() selectedDate: DateCell;
+  @Input() selectedEvent: EventDate;
 
   @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
 
   @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
 
+  @Output() onSaveDate = new EventEmitter();
   constructor() { }
 
   selectEvent(event: EventDate) {
@@ -26,6 +25,10 @@ export class DateDetailComponent implements OnInit {
 
   toggleMemo(event: { index: number, action: string }) {
     this.onToggleMemo.emit(event);
+  }
+
+  saveDate() {
+    this.onSaveDate.emit();
   }
 
   ngOnInit() {}

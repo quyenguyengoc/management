@@ -21,7 +21,7 @@ export class EventFormComponent implements OnInit {
 
   @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
 
-  @Output() onSaveEvent = new EventEmitter();
+  @Output() onSaveDate = new EventEmitter();
 
   toggleMemo(index: number, action: string) {
     this.onToggleMemo.emit({ index: index, action: action });
@@ -35,8 +35,8 @@ export class EventFormComponent implements OnInit {
     this.currentEvent.price = price
   }
 
-  saveEvent() {
-    this.onSaveEvent.emit();
+  saveDate() {
+    this.onSaveDate.emit();
   }
 
   constructor() { }

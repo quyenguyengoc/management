@@ -4,7 +4,7 @@
       <div class="col-sm-6">
         <div class="form-group">
           <select class="form-control" [(ngModel)]="currentEvent.type" name="eventType">
-            <option value="" disabled>Type</option>
+            <option value="undefined" disabled>Type</option>
             <option *ngFor="let type of EVENTTYPES; let i = index" [value]="i" [textContent]="type"></option>
           </select>
         </div>
@@ -23,13 +23,13 @@
           <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.content" placeholder="Content" name="content-{{i}}">
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group">
           <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.price" placeholder="Price" name="price-{{i}}"
             (blur)="updateMemoPrice()">
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
           <div class="form-group">
             <select class="form-control" [(ngModel)]="memo.payerID"  name="payerID-{{i}}">
               <option value="" disabled>Payer ID</option>
@@ -37,7 +37,7 @@
             </select>
           </div>
         </div>
-      <div class="col-sm-2">
+      <div class="col-sm-1">
         <div class="form-group">
           <button class="btn btn-warning" type="button" (click)="toggleMemo(i, 'undo')" *ngIf="memo.isDestroy">
             <i class="fa fa-undo"></i>
@@ -47,7 +47,7 @@
           </button>
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-1">
         <div class="form-group" *ngIf="last">
           <button class="btn btn-success" type="button" (click)="toggleMemo(i, 'add')">
             <i class="fa fa-plus"></i>
@@ -68,7 +68,7 @@
   </div>
   <div class="col-sm-3 mt-5">
     <div class="form-group">
-      <button type="button" class="btn btn-block btn-outline-info" (click)="saveEvent()">Save</button>
+      <button type="button" class="btn btn-block btn-outline-info" (click)="saveDate()">Save</button>
     </div>
   </div>
 </form>

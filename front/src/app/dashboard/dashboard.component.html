@@ -1,11 +1,11 @@
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h4 class="modal-title"><strong [textContent]="cloneModalData.selectedDate.date"></strong></h4>
+    <h4 class="modal-title"><strong [textContent]="selectedDate.date"></strong></h4>
   </div>
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <app-date-detail [modalData]="cloneModalData" (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)" (onSaveEvent)="saveEvent()"></app-date-detail>
+        <app-date-detail [selectedDate]="selectedDate" [selectedEvent]="selectedEvent" (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)" (onSaveDate)="saveDate()"></app-date-detail>
       </div>
     </div>
   </div>

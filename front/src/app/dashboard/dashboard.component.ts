@@ -4,88 +4,101 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute } from '@angular/router';
 
 import { DateCellsService } from '../services/date-cells.service';
+import { FormatService } from '../services/common/format.service';
 
 import { DateCell } from '../class/calendar/date-cell';
 import { EventDate } from '../class/calendar/event-date';
 import { EventMemo } from '../class/calendar/event-memo';
-// import { EventMemo } from '../class/calendar/event-memo';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  @ViewChild(CalendarComponent) calendar: CalendarComponent;
 
   calendarData = { visibleRange: { }, data: [] };
+  
+  selectedDate: DateCell;
+  selectedEvent: EventDate;
 
-  modalData: {
-    currentEvent: EventDate;
-    selectedDate: DateCell;
-  };
-
-  cloneModalData: {
-    currentEvent: EventDate;
-    selectedDate: DateCell;
-  }
-
-  constructor(private modal: NgbModal, private route: ActivatedRoute, private dateCellsService: DateCellsService) { }
+  constructor(private modal: NgbModal, private route: ActivatedRoute, private dateCellsService: DateCellsService, private format: FormatService) { }
 
   dateDetail(dateCell: DateCell) {
-    let selectedDate = dateCell || new DateCell({  date: new Date() });
-    this.dateCellsService.getEvents(selectedDate.id)
+    if (!!!dateCell) {
+      dateCell = this.calendarData.data.find(date => {
+        return date.date == this.format.date();
+      })
+    }
+    
+    this.dateCellsService.getEvents(dateCell.id)
       .subscribe(response => {
-        this.modalData = {
-          selectedDate: new DateCell({
-            id: response.date_cell.id,
-            date: response.date_cell.date,
-            eatingCost: response.date_cell.eating_cost,
-            otherCost: response.date_cell.other_cost,
-            events: new LocalDataSource(response.date_cell.events.map((event: any) => {
-              return new EventDate({
-                id: event.id,
-                title: event.title,
-                price: event.price,
-                type: event.cost_type === 'eating' ? '0' : '1',
-                memo: event.memo.map((memo: any) => {
-                  return new EventMemo({
-                    id: memo.id,
-                    content: memo.content,
-                    price: memo.price,
-                    payerID: memo.payer_id
-                  })
-                })
+        dateCell.events = new LocalDataSource(response.date_cell.events.map((event: any) => {
+          return new EventDate({
+            id: event.id,
+            title: event.title,
+            price: event.price,
+            type: event.cost_type === 'eating' ? '0' : '1',
+            memo: event.memo.map((memo: any) => {
+              return new EventMemo({
+                id: memo.id,
+                content: memo.content,
+                price: memo.price,
+                payerID: memo.payer_id
               })
-            }))
-          }),
-          currentEvent: new EventDate()
-        }
-        this.cloneModalData = Object.assign({}, this.modalData);
-        console.log(this.cloneModalData);
+            })
+          })
+        }));
+        this.selectedDate = dateCell;
+        this.selectedEvent = new EventDate();
         this.modal.open(this.modalContent, { size: 'lg', keyboard: false, backdrop: 'static' });
       });
   }
 
   selectEvent(event: EventDate) {
-    this.cloneModalData.currentEvent = event;
+    this.selectedEvent = event;
   }
 
   toggleMemo(event: {action: string, index: number}) {
     switch(event.action) {
       case 'add':
-        this.cloneModalData.currentEvent.addNewMemo();
+        this.selectedEvent.addNewMemo();
         break;
       case 'remove':
-        this.cloneModalData.currentEvent.memo[event.index].isDestroy = true;
-        this.cloneModalData.currentEvent.price += this.cloneModalData.currentEvent.memo[event.index].price * -1;
+        this.selectedEvent.memo[event.index].isDestroy = true;
+        this.selectedEvent.price += this.selectedEvent.memo[event.index].price * -1;
         break;
       case 'undo':
-        this.cloneModalData.currentEvent.memo[event.index].isDestroy = false;
-        this.cloneModalData.currentEvent.price += this.cloneModalData.currentEvent.memo[event.index].price * 1;
+        this.selectedEvent.memo[event.index].isDestroy = false;
+        this.selectedEvent.price += this.selectedEvent.memo[event.index].price * 1;
         break;
     };
+  }
+
+  saveDate() {
+    let date_cell = {
+      date_cell: this.selectedDate.date
+    };
+    if (this.selectedEvent.newObject() && !!this.selectedEvent.emptyMemo()) {
+      this.selectedDate.events.add(this.selectedEvent);
+    }
+    this.selectedDate.getEvents().then(events => {
+      date_cell['events_attributes'] = events.map((event: EventDate) => {
+        return event.eventObj();
+      });
+      this.dateCellsService.saveDate(this.selectedDate.id, date_cell)
+        .subscribe(response => {
+          this.calendarData.data.find((date: DateCell) => {
+            return date.id === response.date_cell.id;
+          }).updateCost(response.date_cell);
+          this.selectedDate.events.refresh();
+          this.calendar.reload();
+        });
+    });
   }
 
   ngOnInit() {
@@ -94,7 +107,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         (response) => {
           this.calendarData.visibleRange = response.visible_range;
-          this.calendarData.data = response.dates.map((date) => {
+          this.calendarData.data = response.dates.map((date: any) => {
             return new DateCell({
               id: date.id,
               date: date.date,

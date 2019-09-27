@@ -1,6 +1,7 @@
 import { EVENTTYPES } from '../shared/event-types';
 
 export const HEADERS = {
+  mode: 'external',
   columns: {
     title: {
       title: 'Title',
@@ -13,7 +14,7 @@ export const HEADERS = {
     type: {
       title: 'Type',
       filter: false,
-      valuePrepareFunction: (value: number) => { return EVENTTYPES[value] }
+      valuePrepareFunction: (value: number) => { return EVENTTYPES[value]; }
     }
   },
   actions: {
@@ -23,8 +24,6 @@ export const HEADERS = {
     columnTitle: ''
   },
   delete: {
-    deleteButtonContent: '<i class="ti-trash text-danger m-r-10"></i>',
-    saveButtonContent: '<i class="ti-save text-success m-r-10"></i>',
-    cancelButtonContent: '<i class="ti-close text-danger"></i>'
+    deleteButtonContent: '<i class="ti-trash text-danger m-r-10"></i>'
   }
 };
