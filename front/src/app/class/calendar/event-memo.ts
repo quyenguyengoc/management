@@ -10,11 +10,11 @@ export class EventMemo {
   }
 
   available() {
-    return !!this.isDestroy
+    return !!!this.isDestroy;
   }
 
   emptyMemo() {
-    return !!!this.id && (!!!this.content || this.content.length == 0) && !!!this.payerID && !!!this.price;
+    return this.newMemo() && (!!!this.content || this.content.length == 0) && !!!this.payerID && !!!this.price;
   }
 
   newMemo() {

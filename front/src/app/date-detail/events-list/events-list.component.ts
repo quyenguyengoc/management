@@ -15,6 +15,7 @@ export class EventsListComponent implements OnInit {
   @Input() source: any;
 
   @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
+  @Output() onDeleteEvent: EventEmitter<any> = new EventEmitter();
 
 
   selectEvent(event: any) {
@@ -22,7 +23,7 @@ export class EventsListComponent implements OnInit {
   }
 
   deleteEvent(event: any) {
-    this.source.find(event.data).then((event: EventDate) => event.isDestroy = true);
+    this.onDeleteEvent.emit(event);
   }
 
   constructor() {
