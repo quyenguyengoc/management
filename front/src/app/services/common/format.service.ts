@@ -8,7 +8,7 @@ export class FormatService {
 
   constructor(private datePipe: DatePipe) {}
 
-  date(date: Date, format: string) {
-    return this.datePipe.transform(date, format)
+  date(date: Date = undefined, format: string = undefined) {
+    return this.datePipe.transform(date || new Date(), format || 'yyyy-MM-dd');
   }
 }

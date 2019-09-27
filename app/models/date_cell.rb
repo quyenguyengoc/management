@@ -2,7 +2,7 @@ class DateCell < ApplicationRecord
 
   has_many :events, foreign_key: :date_cell_id, class_name: 'EventDate', dependent: :destroy
 
-  has_many :memos, through: :events
+  has_many :memo, through: :events, source: :memo_details
 
   accepts_nested_attributes_for :events, allow_destroy: true
 

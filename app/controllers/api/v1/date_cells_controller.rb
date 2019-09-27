@@ -1,5 +1,5 @@
 class Api::V1::DateCellsController < ApplicationController
-  before_action :load_date_cell, only: [:create, :show]
+  before_action :load_date_cell, only: [:update, :show]
 
   def index
     visible_range = date_range(Date.current)
@@ -9,9 +9,20 @@ class Api::V1::DateCellsController < ApplicationController
     }
   end
 
+  def update
+    @date_cell.assign_attributes(date_cell_params)
+    if @date_cell.valid?
+      @date_cell.save
+      render json: { date_cell: @date_cell.include_events }
+    else
+      render json: :internal_server_error
+    end
+  end
+
   def show
     render json: { date_cell: @date_cell.include_events }
   end
+
   private
 
   def date_range(date)
@@ -23,5 +34,12 @@ class Api::V1::DateCellsController < ApplicationController
 
   def load_date_cell
     @date_cell = DateCell.includes(events: :memo_details).find_by(id: params[:id])
+  end
+
+  def date_cell_params
+    params.require(:date_cell)
+      .permit(:date_cell,
+        events_attributes: [:id, :title, :price, :cost_type, :_destroy,
+          memo_details_attributes: [:id, :content, :price, :payer_id, :_destroy]])
   end
 end

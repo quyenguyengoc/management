@@ -24,4 +24,13 @@ export class DateCell {
       return 'bg-warning';
     }
   }
+
+  async getEvents() {
+    return await this.events.getAll();
+  }
+
+  updateCost(data: any) {
+    this.eatingCost = data.eating_cost;
+    this.otherCost = data.other_cost;
+  }
 }

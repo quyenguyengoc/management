@@ -1,7 +1,7 @@
 export class EventMemo {
-  id: number;
+  id: number = null;
   content: string;
-  price: number;
+  price: number = 0;
   payerID: number;
   isDestroy: boolean = false;
 
@@ -11,5 +11,23 @@ export class EventMemo {
 
   available() {
     return !!this.isDestroy
+  }
+
+  emptyMemo() {
+    return !!!this.id && (!!!this.content || this.content.length == 0) && !!!this.payerID && !!!this.price;
+  }
+
+  newMemo() {
+    return !!!this.id;
+  }
+
+  memoObj() {
+    return {
+      id: this.id,
+      content: this.content,
+      price: this.price,
+      payer_id: Number(this.payerID),
+      _destroy: this.isDestroy
+    }
   }
 }

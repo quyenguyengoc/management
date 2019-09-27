@@ -44,8 +44,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  dateDetail(dateCell, type) {
-    // let events = dateCell.events.filter(event => event.type === type)
+  dateDetail(dateCell: any, type: string) {
     this.dateClick.emit(dateCell);
   }
 
@@ -66,6 +65,11 @@ export class CalendarComponent implements OnInit {
 
   onlyDate(date: Date) {
     return this.format.date(date, 'yyyy-MM-dd');
+  }
+
+  reload() {
+    this.calendar.destroy();
+    this.calendar.render();
   }
 
   constructor(private format: FormatService) { }

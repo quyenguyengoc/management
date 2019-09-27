@@ -30,6 +30,13 @@ export class ApiService {
       .catch(this.handleError);
   }
 
+  public saveDate(id: number, date_cell: any): Observable<any> {
+    return this.http
+      .put<any>(API_URL + '/date_cells/' + id, { date_cell: date_cell})
+      .catch(this.handleError);
+  }
+  
+
   private handleError (error: Response | any) {
     console.error('ApiService::handleError', error);
     return Observable.throw(error);
