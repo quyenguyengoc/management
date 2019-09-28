@@ -5,7 +5,11 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <app-date-detail [selectedDate]="selectedDate" [selectedEvent]="selectedEvent" (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)" (onSaveDate)="saveDate()"></app-date-detail>
+        <app-date-detail
+          [selectedDate]="selectedDate" [selectedEvent]="selectedEvent"
+          (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)"
+          (onSaveDate)="saveDate()" (onDeleteEvent)="deleteEvent($event)">
+        </app-date-detail>
       </div>
     </div>
   </div>

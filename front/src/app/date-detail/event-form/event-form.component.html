@@ -39,7 +39,7 @@
         </div>
       <div class="col-sm-1">
         <div class="form-group">
-          <button class="btn btn-warning" type="button" (click)="toggleMemo(i, 'undo')" *ngIf="memo.isDestroy">
+          <button class="btn btn-warning" type="button" (click)="toggleMemo(i, 'undo')" *ngIf="memo.isDestroy" [disabled]="currentEvent.isDestroy">
             <i class="fa fa-undo"></i>
           </button>
           <button class="btn btn-danger" type="button" (click)="toggleMemo(i, 'remove')" *ngIf="!memo.isDestroy">

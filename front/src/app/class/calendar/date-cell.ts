@@ -1,4 +1,6 @@
 import { LocalDataSource } from 'ng2-smart-table';
+import { EventDate } from './event-date';
+import { EventMemo } from './event-memo';
 
 export class DateCell {
   id: number;
@@ -32,5 +34,28 @@ export class DateCell {
   updateCost(data: any) {
     this.eatingCost = data.eating_cost;
     this.otherCost = data.other_cost;
+  }
+
+  reloadEvent() {
+    this.events.refresh();
+  }
+
+  loadEvents(events: EventDate[]) {
+    this.events = new LocalDataSource(events.map((event: any) => {
+      return new EventDate({
+        id: event.id,
+        title: event.title,
+        price: event.price,
+        type: event.cost_type === 'eating' ? '0' : '1',
+        memo: event.memo.map((memo: any) => {
+          return new EventMemo({
+            id: memo.id,
+            content: memo.content,
+            price: memo.price,
+            payerID: memo.payer_id
+          })
+        })
+      })
+    }));
   }
 }

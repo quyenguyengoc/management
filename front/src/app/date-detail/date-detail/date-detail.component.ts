@@ -13,10 +13,10 @@ export class DateDetailComponent implements OnInit {
   @Input() selectedEvent: EventDate;
 
   @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
-
   @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
-
   @Output() onSaveDate = new EventEmitter();
+  @Output() onDeleteEvent: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   selectEvent(event: EventDate) {
@@ -29,6 +29,10 @@ export class DateDetailComponent implements OnInit {
 
   saveDate() {
     this.onSaveDate.emit();
+  }
+
+  deleteEvent(event: any) {
+    this.onDeleteEvent.emit(event)
   }
 
   ngOnInit() {}
