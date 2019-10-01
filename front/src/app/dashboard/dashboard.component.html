@@ -1,14 +1,14 @@
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h4 class="modal-title"><strong [textContent]="selectedDate.date"></strong></h4>
+    <h4 class="modal-title"><strong [textContent]="selected_date.date"></strong></h4>
   </div>
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
         <app-date-detail
-          [selectedDate]="selectedDate" [selectedEvent]="selectedEvent"
-          (onSelectEvent)="selectEvent($event)" (onToggleMemo)="toggleMemo($event)"
-          (onSaveDate)="saveDate()" (onDeleteEvent)="deleteEvent($event)">
+          [selected_date]="selected_date" [selected_event]="selected_event"
+          (on_select_event)="select_event($event)" (on_toggle_memo)="toggle_memo($event)"
+          (on_save_date)="save_date()" (on_delete_event)="delete_event($event)">
         </app-date-detail>
       </div>
     </div>
@@ -23,23 +23,17 @@
       <div class="">
         <div class="row">
           <div class="col-lg-3 border-right pr-0">
-            <div class="card-body border-bottom">
-              <h4 class="card-title mt-2">Drag & Drop Event</h4>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="javascript:void(0)" class="btn mt-3 btn-info btn-block waves-effect waves-light" (click)="dateDetail()">
-                    <i class="ti-plus"></i> Add New Event
-                  </a>
-                </div>
-              </div>
-            </div>
+            <app-month-info [month_info]="month_info" [edit_mode]="edit_mode"
+              (on_toggle_edit_mode)="toggle_edit_mode()"
+              (on_update_month_info)="update_month_info($event)"
+              (on_toggle_power_option)="toggle_power_option()"
+              (on_toggle_water_option)="toggle_water_option()">
+            </app-month-info>
           </div>
 
           <div class="col-lg-9">
             <div class="card-body b-l calender-sidebar">
-              <app-calendar [calendarData]="calendarData" (dateClick)="dateDetail($event)">
+              <app-calendar [calendar_data]="calendar_data" (dateClick)="date_detail($event)">
               </app-calendar>
             </div>
           </div>

@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,9 +26,10 @@ import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { EventFormComponent } from './date-detail/event-form/event-form.component';
 import { EventsListComponent } from './date-detail/events-list/events-list.component';
 import { DateDetailComponent } from './date-detail/date-detail/date-detail.component';
+import { MonthInfoComponent } from './month-info/month-info.component';
 
-import { ApiService } from './services/api/date-cells/api.service';
-import { DateCellsService } from './services/date-cells.service';
+import { SpinnerService } from '../app/services/common/spinner.service';
+import { SpinnerInterCeptor } from './interceptors/spinner.interceptor';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -50,7 +51,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomizerComponent,
     EventFormComponent,
     EventsListComponent,
-    DateDetailComponent
+    DateDetailComponent,
+    MonthInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +70,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
     DatePipe,
-    ApiService,
-    DateCellsService
+    SpinnerService,
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterCeptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

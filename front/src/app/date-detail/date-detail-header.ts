@@ -11,7 +11,7 @@ export const HEADERS = {
       title: 'Price',
       filter: false
     },
-    type: {
+    expense_type: {
       title: 'Type',
       filter: false,
       valuePrepareFunction: (value: number) => { return EVENTTYPES[value]; }

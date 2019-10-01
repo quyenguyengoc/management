@@ -1,2 +1,2 @@
-<app-events-list [source]="selectedDate.events" (onSelectEvent)="selectEvent($event)" (onDeleteEvent)="deleteEvent($event)"></app-events-list>
-<app-event-form [currentEvent]="selectedEvent" (onToggleMemo)="toggleMemo($event)" (onSaveDate)="saveDate()"></app-event-form>
+<app-events-list [source]="selected_date.events" (on_select_event)="select_event($event)" (on_delete_event)="delete_event($event)"></app-events-list>
+<app-event-form [current_event]="selected_event" (on_toggle_memo)="toggle_memo($event)" (on_save_date)="save_date()"></app-event-form>

@@ -5,54 +5,44 @@ import { EventMemo } from './event-memo';
 export class DateCell {
   id: number;
   date: string;
-  eatingCost: number = 0;
-  otherCost: number = 0;
-  events: LocalDataSource;
+  expense: {
+    eating: number;
+    other: number;
+    all_day: number;
+  } = {
+    eating: 0,
+    other: 0,
+    all_day: 0
+  };
+  events: LocalDataSource = new LocalDataSource([]);
 
   constructor(values: Object = {}) {
     Object.assign(this, values)
   }
 
-  price(budget: number) {
-    return budget - this.eatingCost;
-  }
-
-  cssForPrice(budget: number) {
-    if (this.eatingCost > budget) {
-      return 'bg-danger';
-    } else if (this.eatingCost < budget) {
-      return 'bg-success';
-    } else {
-      return 'bg-warning';
-    }
-  }
-
-  async getEvents() {
+  async get_events() {
     return await this.events.getAll();
   }
 
-  updateCost(data: any) {
-    this.eatingCost = data.eating_cost;
-    this.otherCost = data.other_cost;
+  update_expense(data: any) {
+    this.expense.eating = data.expense.eating;
+    this.expense.other = data.expense.other;
+    this.expense.all_day = data.expense.all_day;
   }
 
-  reloadEvent() {
-    this.events.refresh();
-  }
-
-  loadEvents(events: EventDate[]) {
+  load_events(events: EventDate[]) {
     this.events = new LocalDataSource(events.map((event: any) => {
       return new EventDate({
         id: event.id,
         title: event.title,
         price: event.price,
-        type: event.cost_type === 'eating' ? '0' : '1',
+        expense_type: event.expense_type === 'eating' ? '0' : '1',
         memo: event.memo.map((memo: any) => {
           return new EventMemo({
             id: memo.id,
             content: memo.content,
             price: memo.price,
-            payerID: memo.payer_id
+            payer_id: memo.payer_id
           })
         })
       })

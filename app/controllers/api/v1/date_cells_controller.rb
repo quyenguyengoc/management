@@ -1,11 +1,12 @@
 class Api::V1::DateCellsController < ApplicationController
+  before_action :load_month_info, :load_date_cells, only: :index
   before_action :load_date_cell, only: [:update, :show]
 
   def index
-    visible_range = date_range(Date.current)
     render json: {
-      visible_range: { start: visible_range.first, end: visible_range.last },
-      dates: DateCell.date_in_month(visible_range).map(&:to_json)
+      month_info: @month_info.to_json,
+      visible_range: { start: @month_info.start_at, end: @month_info.end_at },
+      dates: @date_cells
     }
   end
 
@@ -13,7 +14,7 @@ class Api::V1::DateCellsController < ApplicationController
     @date_cell.assign_attributes(date_cell_params)
     if @date_cell.valid?
       @date_cell.save
-      render json: { date_cell: @date_cell.include_events }
+      render json: { date_cell: @date_cell.include_events, month_info: @date_cell.month_info.to_json }
     else
       render json: :internal_server_error
     end
@@ -25,21 +26,24 @@ class Api::V1::DateCellsController < ApplicationController
 
   private
 
-  def date_range(date)
-    start_at = date.change(day: 10)
-    range_start_at = date < start_at ? start_at.change(month: start_at.month - 1) : start_at
-    range_end_at = start_at.change({ month: start_at.month + 1, day: 9 })
-    [*range_start_at..range_end_at]
+  def load_month_info
+    current = Date.current
+    start_at = current.day > 9 ? current.change(day: 10) : current.change(day: 10, month: current.month - 1)
+    end_at = start_at.change(month: start_at.month + 1, day: 9)
+    @month_info = MonthInfo.includes(dates: [events: :memo_details]).find_by(start_at: start_at)
+  end
+
+  def load_date_cells
+    @date_cells = @month_info.dates.map(&:to_json)
   end
 
   def load_date_cell
     @date_cell = DateCell.includes(events: :memo_details).find_by(id: params[:id])
   end
-
   def date_cell_params
     params.require(:date_cell)
       .permit(:date_cell,
-        events_attributes: [:id, :title, :price, :cost_type, :_destroy,
+        events_attributes: [:id, :title, :price, :expense_type, :_destroy,
           memo_details_attributes: [:id, :content, :price, :payer_id, :_destroy]])
   end
 end

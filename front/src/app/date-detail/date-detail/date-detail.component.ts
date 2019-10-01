@@ -9,30 +9,30 @@ import { EventDate } from '../../class/calendar/event-date';
 })
 export class DateDetailComponent implements OnInit {
 
-  @Input() selectedDate: DateCell;
-  @Input() selectedEvent: EventDate;
+  @Input() selected_date: DateCell;
+  @Input() selected_event: EventDate;
 
-  @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
-  @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
-  @Output() onSaveDate = new EventEmitter();
-  @Output() onDeleteEvent: EventEmitter<any> = new EventEmitter();
+  @Output() on_select_event: EventEmitter<EventDate> = new EventEmitter();
+  @Output() on_toggle_memo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
+  @Output() on_save_date = new EventEmitter();
+  @Output() on_delete_event: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  selectEvent(event: EventDate) {
-    this.onSelectEvent.emit(event);
+  select_event(event: EventDate) {
+    this.on_select_event.emit(event);
   }
 
-  toggleMemo(event: { index: number, action: string }) {
-    this.onToggleMemo.emit(event);
+  toggle_memo(event: { index: number, action: string }) {
+    this.on_toggle_memo.emit(event);
   }
 
-  saveDate() {
-    this.onSaveDate.emit();
+  save_date() {
+    this.on_save_date.emit();
   }
 
-  deleteEvent(event: any) {
-    this.onDeleteEvent.emit(event)
+  delete_event(event: any) {
+    this.on_delete_event.emit(event)
   }
 
   ngOnInit() {}

@@ -1,22 +1,15 @@
-date = Date.current
-start_at = date.change(day: 10)
-range_start_at = date < start_at ? start_at.change(month: start_at.month - 1) : start_at
-range_end_at = start_at.change({ month: start_at.month + 1, day: 9 })
+current = Date.current
+start_at = current.day > 9 ? current.change(day: 10) : current.change(day: 10, month: current.month - 1)
+end_at = start_at.change(month: start_at.month + 1, day: 9)
 
+month_info = MonthInfo.find_or_initialize_by(start_at: start_at, end_at: end_at)
 
-DateCell.date_in_month([*range_start_at..range_end_at]).each do |date_cell|
-  [*1...5].sample.times do |i|
-    event_date = date_cell.events.new( { title: Faker::Book.title, cost_type: [:eating, :other].sample } )
-    memo_details = []
-    [*1..3].sample.times do |index|
-      memo_details << {
-        content: Faker::Lorem.sentence,
-        price: [*1..50].sample * 10000,
-        payer_id: [*0..2].sample,
-        event: event_date
-      }
-    end
-    event_date.memo_details = EventMemo.create(memo_details)
-    event_date.save
-  end
+unless month_info.id
+  month_info.total_budget = 6000000
+  month_info.power_number_start = 305
+  month_info.save
+end
+
+[*start_at...end_at].each do |date|
+  date_cell = month_info.dates.create!(date_cell: date)
 end

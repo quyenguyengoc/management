@@ -17,26 +17,26 @@ export class EventFormComponent implements OnInit {
 
   PAYERIDS = PAYERIDS;
 
-  @Input() currentEvent: EventDate;
+  @Input() current_event: EventDate;
 
-  @Output() onToggleMemo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
+  @Output() on_toggle_memo: EventEmitter<{ index: number, action: string }> = new EventEmitter();
 
-  @Output() onSaveDate = new EventEmitter();
+  @Output() on_save_date = new EventEmitter();
 
-  toggleMemo(index: number, action: string) {
-    this.onToggleMemo.emit({ index: index, action: action });
+  toggle_memo(index: number, action: string) {
+    this.on_toggle_memo.emit({ index: index, action: action });
   }
 
   updateMemoPrice() {
     let price = 0;
-    this.currentEvent.memo.forEach(function(memo) {
-      price += memo.isDestroy ? 0 : memo.price*1;
+    this.current_event.memo.forEach(function(memo) {
+      price += memo.is_destroy ? 0 : memo.price*1;
     });
-    this.currentEvent.price = price
+    this.current_event.price = price
   }
 
-  saveDate() {
-    this.onSaveDate.emit();
+  save_date() {
+    this.on_save_date.emit();
   }
 
   constructor() { }

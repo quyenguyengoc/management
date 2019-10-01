@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DateCellsResolver } from './services/date-cells.resolver';
+import { DateCellsResolver } from './resolvers/date-cells.resolver';
 
 const routes: Routes = [
   {
