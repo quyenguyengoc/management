@@ -4,14 +4,31 @@ class DateCell < ApplicationRecord
 
   has_many :memo, through: :events, source: :memo_details
 
+  belongs_to :month_info, foreign_key: :month_info_id
+
   accepts_nested_attributes_for :events, allow_destroy: true
 
-  def eating_cost
+  def eating_expense
     events.eating.sum(&:price)
   end
 
-  def other_cost
+  def other_expense
     events.other.sum(&:price)
+  end
+
+  def day_expense
+    events.sum(&:price)
+  end
+
+  def expense
+    eating = eating_expense
+    other = other_expense
+
+    {
+      eating: eating,
+      other: other,
+      all_day: eating + other
+    }
   end
 
   def to_json
@@ -19,8 +36,7 @@ class DateCell < ApplicationRecord
       id: id,
       date: date_cell,
       events: events.map(&:to_json),
-      eating_cost: eating_cost,
-      other_cost: other_cost
+      expense: expense
     }
   end
 

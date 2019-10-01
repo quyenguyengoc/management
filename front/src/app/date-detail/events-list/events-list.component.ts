@@ -14,16 +14,16 @@ export class EventsListComponent implements OnInit {
 
   @Input() source: any;
 
-  @Output() onSelectEvent: EventEmitter<EventDate> = new EventEmitter();
-  @Output() onDeleteEvent: EventEmitter<any> = new EventEmitter();
+  @Output() on_select_event: EventEmitter<EventDate> = new EventEmitter();
+  @Output() on_delete_event: EventEmitter<any> = new EventEmitter();
 
 
-  selectEvent(event: any) {
-    this.onSelectEvent.emit(event.data);
+  select_event(event: any) {
+    this.on_select_event.emit(event.data);
   }
 
-  deleteEvent(event: any) {
-    this.onDeleteEvent.emit(event);
+  delete_event(event: any) {
+    this.on_delete_event.emit(event);
   }
 
   constructor() {

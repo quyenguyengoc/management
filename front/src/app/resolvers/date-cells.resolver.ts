@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { DateCell } from '../class/calendar/date-cell';
 
-import { DateCellsService } from './date-cells.service';
+import { DateCellsService } from '../services/date-cells.service';
 
 @Injectable()
 export class DateCellsResolver implements Resolve<Observable<DateCell[]>> {
@@ -12,6 +12,6 @@ export class DateCellsResolver implements Resolve<Observable<DateCell[]>> {
   constructor(private service: DateCellsService) {}
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DateCell[]> {
-    return this.service.getData();
+    return this.service.get_date();
   }
 }

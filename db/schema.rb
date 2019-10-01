@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_104701) do
+ActiveRecord::Schema.define(version: 2019_09_28_083909) do
 
   create_table "date_cells", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "date_cell", null: false
+    t.integer "month_info_id", null: false
   end
 
   create_table "event_dates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.decimal "price", precision: 10, default: "0"
-    t.integer "cost_type", null: false
+    t.integer "expense_type", null: false
     t.integer "date_cell_id", null: false
   end
 
@@ -28,6 +29,14 @@ ActiveRecord::Schema.define(version: 2019_09_09_104701) do
     t.decimal "price", precision: 10, default: "0"
     t.integer "event_date_id"
     t.integer "payer_id", default: 0
+  end
+
+  create_table "month_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "start_at", null: false
+    t.date "end_at", null: false
+    t.integer "power_number_start", null: false
+    t.integer "power_number_end", default: 0
+    t.decimal "total_budget", precision: 10, null: false
   end
 
 end

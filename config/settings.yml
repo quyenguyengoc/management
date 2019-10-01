@@ -1,0 +1,5 @@
+default_total_budget: 6000000
+expense:
+  power_number: 3000
+  rent: 2300000
+  water: 60000

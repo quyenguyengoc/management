@@ -1,51 +1,19 @@
 import {
   Component,
-  Input,
-  OnDestroy,
-  Inject,
-  ViewEncapsulation
 } from '@angular/core';
 
-import {
-  Router,
-  NavigationStart,
-  NavigationEnd,
-  NavigationCancel,
-  NavigationError
-} from '@angular/router';
+import { SpinnerService } from '../../services/common/spinner.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./spinner.component.scss']
 })
 
-export class SpinnerComponent implements OnDestroy {
-  public isSpinnerVisible = true;
+export class SpinnerComponent {
+  public onRequest: Subject<boolean> = this.spinner.onRequest;
 
-  @Input() public backgroundColor = 'rgba(0, 115, 170, 0.69)';
-
-  constructor(private router: Router) {
-    this.router.events.subscribe(
-      event => {
-        if (event instanceof NavigationStart) {
-          this.isSpinnerVisible = true;
-        } else if (
-          event instanceof NavigationEnd ||
-          event instanceof NavigationCancel ||
-          event instanceof NavigationError
-        ) {
-          this.isSpinnerVisible = false;
-        }
-      },
-      () => {
-        this.isSpinnerVisible = false;
-      }
-    )
+  constructor(private spinner: SpinnerService) {
   }
-
-  ngOnDestroy(): void {
-    this.isSpinnerVisible = false;
-  }
-
 }

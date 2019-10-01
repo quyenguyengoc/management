@@ -5,10 +5,10 @@ class EventDate < ApplicationRecord
 
   accepts_nested_attributes_for :memo_details, allow_destroy: true
 
-  validates :title, :cost_type, presence: true
+  validates :title, :expense_type, presence: true
   validates :price, numericality: true
 
-  enum cost_type: [:eating, :other]
+  enum expense_type: [:eating, :other]
 
   before_save :set_price
 
@@ -22,7 +22,7 @@ class EventDate < ApplicationRecord
       title: title,
       price: price,
       memo: memo_details.map(&:to_json),
-      cost_type: cost_type
+      expense_type: expense_type
     }
   end
 end

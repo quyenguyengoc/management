@@ -1,0 +1,76 @@
+<div class="card-body border-bottom">
+  <h4 class="card-title mt-2">
+
+    <span>Thông tin</span>
+    <div class="button-group d-inline-block float-right">
+      <a class="btn p-0" href="javascript:void(0)" role="button" (click)="toggle_edit_mode()" *ngIf="!!!edit_mode"><i class="ti-pencil text-info m-r-10"></i></a>
+      <a class="btn p-0" href="javascript:void(0)" role="button" (click)="update_month_info()" *ngIf="edit_mode"><i class="ti-save text-success m-r-10"></i></a>
+      <a class="btn p-0 " href="javascript:void(0)" role="button" (click)="toggle_edit_mode()" *ngIf="edit_mode"><i class="ti-close text-danger m-r-10"></i></a>
+    </div>
+  </h4>
+</div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered table-responsive-md">
+          <thead>
+            <tr>
+              <th scope="col">Tổng</th>
+              <th scope="col" colspan="3" class="text-right" [textContent]="month_info.budget.total | currency:'VND'"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Trọ</th>
+              <th scope="col" colspan="3" class="text-right" [textContent]="month_info.expense.rent | currency:'VND'"></th>
+            </tr>
+            <tr>
+              <th scope="row">Tiền ăn</th>
+              <th scope="col" colspan="2" class="text-right" [textContent]="month_info.days"></th>
+              <td class="text-right" [textContent]="month_info.budget.per_day.toFixed(2) | currency:'VND'"></td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="power_expense_option"
+                  [(ngModel)]="month_info.option.power_expense" name="option[power_expense]"
+                  (ngModelChange)="this.toggle_power_option()">
+                  <label class="custom-control-label" for="power_expense_option">Điện</label>
+                </div>
+              </th>
+              <td class="text-right">
+                <span *ngIf="!!!edit_mode" [textContent]="month_info.expense.power.start_at"></span>
+                <input *ngIf="edit_mode" [(ngModel)]="month_info_edit.power_start" autofocus class="input_mode"/>
+              </td>
+              <td class="text-right">
+                <span *ngIf="!!!edit_mode" [textContent]="month_info.expense.power.end_at"></span>
+                <input *ngIf="edit_mode" [(ngModel)]="month_info_edit.power_end" class="input_mode"/>
+              </td>
+              <td class="text-right" [textContent]="month_info.expense.power.expense | currency:'VND'"></td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="water_expense_option"
+                  [(ngModel)]="month_info.option.water_expense" name="option[water_expense]"
+                  (ngModelChange)="this.toggle_water_option()">
+                  <label class="custom-control-label" for="water_expense_option">Nước</label>
+                </div>
+              </th>
+              <th class="text-right" scope="col" colspan="3" [textContent]="month_info.expense.water | currency:'VND'"></th>
+            </tr>
+            <tr>
+              <th scope="row">Còn lại</th>
+              <th class="text-right" scope="col" colspan="3" [textContent]="month_info.budget.current | currency:'VND'"></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <a href="javascript:void(0)" class="btn mt-3 btn-info btn-block waves-effect waves-light" (click)="date_detail()">
+        <i class="ti-plus"></i> Add New Event
+      </a> -->
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
-          <select class="form-control" [(ngModel)]="currentEvent.type" name="eventType">
+          <select class="form-control" [(ngModel)]="current_event.expense_type" name="eventType">
             <option value="undefined" disabled>Type</option>
             <option *ngFor="let type of EVENTTYPES; let i = index" [value]="i" [textContent]="type"></option>
           </select>
@@ -11,45 +11,45 @@
       </div>
       <div class="col-sm-6">
         <div class="form-group">
-          <input type="text" class="form-control" [(ngModel)]="currentEvent.title" placeholder="Title" name="title">
+          <input type="text" class="form-control" [(ngModel)]="current_event.title" placeholder="Title" name="title">
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-12">
-    <div class="row" *ngFor="let memo of currentEvent.memo; let last = last; let i = index;">
+    <div class="row" *ngFor="let memo of current_event.memo; let last = last; let i = index;">
       <div class="col-sm-4">
         <div class="form-group">
-          <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.content" placeholder="Content" name="content-{{i}}">
+          <input type="text" class="form-control" [class.line-through]="memo.is_destroy" [(ngModel)]="memo.content" placeholder="Content" name="content-{{i}}">
         </div>
       </div>
       <div class="col-sm-3">
         <div class="form-group">
-          <input type="text" class="form-control" [class.line-through]="memo.isDestroy" [(ngModel)]="memo.price" placeholder="Price" name="price-{{i}}"
+          <input type="text" class="form-control" [class.line-through]="memo.is_destroy" [(ngModel)]="memo.price" placeholder="Price" name="price-{{i}}"
             (blur)="updateMemoPrice()">
         </div>
       </div>
       <div class="col-sm-3">
           <div class="form-group">
-            <select class="form-control" [(ngModel)]="memo.payerID"  name="payerID-{{i}}">
-              <option value="" disabled>Payer ID</option>
+            <select class="form-control" [(ngModel)]="memo.payer_id"  name="payer_id-{{i}}">
+              <option value="undefined" disabled>Payer ID</option>
               <option *ngFor="let payer of PAYERIDS;" [value]="payer.value" [textContent]="payer.icon"></option>
             </select>
           </div>
         </div>
       <div class="col-sm-1">
         <div class="form-group">
-          <button class="btn btn-warning" type="button" (click)="toggleMemo(i, 'undo')" *ngIf="memo.isDestroy" [disabled]="currentEvent.isDestroy">
+          <button class="btn btn-warning" type="button" (click)="toggle_memo(i, 'undo')" *ngIf="memo.is_destroy" [disabled]="current_event.is_destroy">
             <i class="fa fa-undo"></i>
           </button>
-          <button class="btn btn-danger" type="button" (click)="toggleMemo(i, 'remove')" *ngIf="!memo.isDestroy">
+          <button class="btn btn-danger" type="button" (click)="toggle_memo(i, 'remove')" *ngIf="!memo.is_destroy">
             <i class="fa fa-minus"></i>
           </button>
         </div>
       </div>
       <div class="col-sm-1">
         <div class="form-group" *ngIf="last">
-          <button class="btn btn-success" type="button" (click)="toggleMemo(i, 'add')">
+          <button class="btn btn-success" type="button" (click)="toggle_memo(i, 'add')">
             <i class="fa fa-plus"></i>
           </button>
         </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="row">
       <div class="col-sm-8 text-right font-weight-bold">
-        <h3 [textContent]="currentEvent.price"></h3>
+        <h3 [textContent]="current_event.price"></h3>
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@
   </div>
   <div class="col-sm-3 mt-5">
     <div class="form-group">
-      <button type="button" class="btn btn-block btn-outline-info" (click)="saveDate()">Save</button>
+      <button type="button" class="btn btn-block btn-outline-info" (click)="save_date()">Save</button>
     </div>
   </div>
 </form>
