@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -18,9 +18,9 @@ export class DateCellApiService {
 
   constructor(private http: HttpClient) { }
 
-  public get_calendar_data(): Observable<DateCell[]> {
+  public get_calendar_data(start_at: Date = new Date): Observable<DateCell[]> {
     return this.http
-      .get<DateCell[]>(API_URL + '/date_cells')
+      .get<DateCell[]>(API_URL + '/date_cells', { params: this.init_params({ start_at: start_at }) })
       .catch(this.handle_error);
   }
 
@@ -39,5 +39,13 @@ export class DateCellApiService {
   private handle_error (error: Response | any) {
     console.error('ApiService::handle_error', error);
     return Observable.throw(error);
+  }
+
+  private init_params(params: any): HttpParams {
+    let http_params = new HttpParams()
+    Object.keys(params).forEach((key: string) => {
+      http_params = http_params.append(key, params[key]);
+    });
+    return http_params;
   }
 }

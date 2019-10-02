@@ -30,6 +30,7 @@
               "src/styles.scss",
               "node_modules/@fullcalendar/core/main.css",
               "node_modules/@fullcalendar/daygrid/main.css",
+              "node_modules/@fullcalendar/bootstrap/main.css",
               "src/assets/vendor/css-chart.css",
               "src/assets/scss/style.scss"
             ],
