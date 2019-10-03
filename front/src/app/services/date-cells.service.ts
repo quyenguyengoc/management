@@ -11,8 +11,8 @@ export class DateCellsService {
 
   constructor(private api: DateCellApiService) {}
 
-  get_date(): Observable<DateCell[]> {
-    return this.api.get_calendar_data()
+  get_date(start_at: Date = new Date()): Observable<DateCell[]> {
+    return this.api.get_calendar_data(start_at)
   }
 
   get_events(id: number): Observable<any> {

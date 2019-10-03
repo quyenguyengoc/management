@@ -1,6 +1,6 @@
 current = Date.current
 start_at = current.day > 9 ? current.change(day: 10) : current.change(day: 10, month: current.month - 1)
-end_at = start_at.change(month: start_at.month + 1, day: 9)
+end_at = start_at.change(month: start_at.month + 1)
 
 month_info = MonthInfo.find_or_initialize_by(start_at: start_at, end_at: end_at)
 

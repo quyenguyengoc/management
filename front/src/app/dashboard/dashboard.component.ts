@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit {
           this.calendar_data.data.find((date: DateCell) => {
             return date.id === response.date_cell.id;
           }).update_expense(response.date_cell);
-          this.monthInfoCalc(response.month_info);
+          this.month_info_calc(response.month_info);
           this.selected_date.load_events(response.date_cell.events);
           if (this.selected_event.empty_memo() || this.selected_event.new_object()) {
             this.selected_event = new EventDate();
@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
     event.data.is_destroy ? row.addClass('table-danger') : row.removeClass('table-danger');
   }
 
-  monthInfoCalc(data: any) {
+  month_info_calc(data: any) {
     this.month_info = data;
     this.month_info.budget.current = this.month_info.budget.total - this.month_info.expense.eating - this.month_info.expense.other - this.month_info.expense.rent;
     if (!!!this.month_info.option) {
@@ -155,16 +155,47 @@ export class DashboardComponent implements OnInit {
     this.month_info_service.save_month_info(params)
       .subscribe((response: any) => {
         this.edit_mode = false;
-        this.monthInfoCalc(response.month_info);
+        this.month_info_calc(response.month_info);
         this.cdRef.detectChanges();
       });
   }
 
+  change_month(action: string) {
+    let start_at = this.calendar.start_at();
+    let difference = start_at.getMonth();
+    switch(action) {
+      case 'prev':
+        difference -= 1;
+        this.calendar.prev_month();
+        break;
+      case 'next':
+        difference += 1;
+        this.calendar.next_month();
+        break;
+      default:
+        break;
+    }
+
+    this.date_cells_service.get_date(new Date(start_at.setMonth(difference + 1)))
+      .subscribe((response: any) => {
+        this.calendar_data.visible_range = {
+          start: response.month_info.start_at,
+          end: response.month_info.end_at,
+        };
+        this.calendar_data.data = response.dates.map((date: any) => {
+          return new DateCell(date)
+        });
+        this.month_info_calc(response.month_info);
+        this.cdRef.detectChanges();
+        this.calendar.reload();
+      })
+  }
+
   constructor(
     private modal: NgbModal,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private date_cells_service: DateCellsService,
-    private format: FormatService, 
+    private format: FormatService,
     private month_info_service: MonthInfoService,
     private cdRef: ChangeDetectorRef
     ) { }
@@ -174,10 +205,10 @@ export class DashboardComponent implements OnInit {
       .map((data) => data['response'])
       .subscribe(
         (response) => {
-          this.monthInfoCalc(response.month_info);
+          this.month_info_calc(response.month_info);
           this.calendar_data.visible_range = {
             start: response.month_info.start_at,
-            end: response.month_info.end_at
+            end: response.month_info.end_at,
           };
           this.calendar_data.data = response.dates.map((date: any) => {
             return new DateCell(date)
