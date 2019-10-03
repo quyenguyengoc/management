@@ -41,8 +41,13 @@ export class CalendarComponent implements OnInit {
       plugins: this.calendar_plugins,
       defaultView: 'dayGridMonth',
       themeSystem: 'bootstrap',
-      defaultDate: (new Date(this.calendar_data.visible_range.start)),
-      visibleRange: this.calendar_data.visible_range,
+      views: {
+        dayGrid: {
+          duration: { months: 1 },
+        }
+      },
+      dateAlignment: 'day',
+      defaultDate: new Date(this.calendar_data.visible_range.start),
       dayRender: this.day_render.bind(this),
       customButtons: {
         prev_btn: {
