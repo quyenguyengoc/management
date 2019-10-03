@@ -27,10 +27,10 @@ class Api::V1::DateCellsController < ApplicationController
 
   def load_month_info
     month_info = Date.parse(params[:start_at]) rescue Date.current
-    start_at = month_info.day > 9 ? month_info.change(day: 10) : month_info.change(day: 10, month: month_info.month - 1)
+    start_at = month_info.day > 10 ? month_info.change(day: 10) : (month_info - 1.month).change(day: 10)
     @month_info = MonthInfo.includes(dates: [events: :memo_details]).find_by(start_at: start_at)
     unless @month_info
-      end_at = start_at.change(month: start_at.month + 1)
+      end_at = start_at + 1.month
       @month_info = MonthInfo.new(start_at: start_at, end_at: end_at, total_budget: Settings.default_total_budget, power_number_start: 0)
       @month_info.save if @month_info.valid?
       [*start_at...end_at].each do |date|

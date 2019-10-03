@@ -107,9 +107,7 @@ export class DashboardComponent implements OnInit {
           }).update_expense(response.date_cell);
           this.month_info_calc(response.month_info);
           this.selected_date.load_events(response.date_cell.events);
-          if (this.selected_event.empty_memo() || this.selected_event.new_object()) {
-            this.selected_event = new EventDate();
-          }
+          this.selected_event = new EventDate();
           this.calendar.reload();
         });
     });
