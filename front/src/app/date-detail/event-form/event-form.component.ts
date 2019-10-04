@@ -5,6 +5,7 @@ import { EVENTTYPES } from '../../shared/event-types';
 import { PAYERIDS } from '../../shared/payer-ids';
 
 import { EventDate } from '../../class/calendar/event-date';
+import { FormatService } from 'src/app/services/common/format.service';
 
 @Component({
   selector: 'app-event-form',
@@ -39,7 +40,11 @@ export class EventFormComponent implements OnInit {
     this.on_save_date.emit();
   }
 
-  constructor() { }
+  to_vnd(value: number) {
+    return this.format.to_vnd(value);
+  }
+
+  constructor(private format: FormatService) { }
 
   ngOnInit() {}
 }

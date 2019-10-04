@@ -18,18 +18,18 @@
           <thead>
             <tr>
               <th scope="col">Tổng</th>
-              <th scope="col" colspan="3" class="text-right" [textContent]="month_info.budget.total | currency:'VND'"></th>
+              <th scope="col" colspan="3" class="text-right" [textContent]="to_vnd(month_info.budget.total)"></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">Trọ</th>
-              <th scope="col" colspan="3" class="text-right" [textContent]="month_info.expense.rent | currency:'VND'"></th>
+              <th scope="col" colspan="3" class="text-right" [textContent]="to_vnd(month_info.expense.rent)"></th>
             </tr>
             <tr>
               <th scope="row">Tiền ăn</th>
               <th scope="col" colspan="2" class="text-right" [textContent]="month_info.days"></th>
-              <td class="text-right" [textContent]="month_info.budget.per_day.toFixed(2) | currency:'VND'"></td>
+              <td class="text-right" [textContent]="to_vnd(month_info.budget.per_day.toFixed(2))"></td>
             </tr>
             <tr>
               <th scope="row">
@@ -48,7 +48,7 @@
                 <span *ngIf="!!!edit_mode" [textContent]="month_info.expense.power.end_at"></span>
                 <input *ngIf="edit_mode" [(ngModel)]="month_info_edit.power_end" class="input_mode"/>
               </td>
-              <td class="text-right" [textContent]="month_info.expense.power.expense | currency:'VND'"></td>
+              <td class="text-right" [textContent]="to_vnd(month_info.expense.power.expense)"></td>
             </tr>
             <tr>
               <th scope="row">
@@ -59,11 +59,11 @@
                   <label class="custom-control-label" for="water_expense_option">Nước</label>
                 </div>
               </th>
-              <th class="text-right" scope="col" colspan="3" [textContent]="month_info.expense.water | currency:'VND'"></th>
+              <th class="text-right" scope="col" colspan="3" [textContent]="to_vnd(month_info.expense.water)"></th>
             </tr>
             <tr>
               <th scope="row">Còn lại</th>
-              <th class="text-right" scope="col" colspan="3" [textContent]="month_info.budget.current | currency:'VND'"></th>
+              <th class="text-right" scope="col" colspan="3" [textContent]="to_vnd(month_info.budget.current)"></th>
             </tr>
           </tbody>
         </table>

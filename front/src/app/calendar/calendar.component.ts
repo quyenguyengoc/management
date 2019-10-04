@@ -82,7 +82,7 @@ export class CalendarComponent implements OnInit {
     if (date_cell) {
       $(dayRenderInfo.el).html(`
         <div class="row m-0">
-          <div class="col-md-12 bg-success p-0 text-right text-white">` + date_cell.expense.all_day + `</div>
+          <div class="col-md-12 bg-success p-0 text-right text-white">` + this.to_vnd(date_cell.expense.all_day) + `</div>
         </div>
       `)
       $(td_el).removeClass('fc-other-month');
@@ -94,6 +94,10 @@ export class CalendarComponent implements OnInit {
 
   only_date(date: Date) {
     return this.format.date(date, 'yyyy-MM-dd');
+  }
+
+  to_vnd(price: number) {
+    return this.format.to_vnd(price);
   }
 
   reload() {

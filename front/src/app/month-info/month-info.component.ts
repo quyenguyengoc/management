@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormatService } from '../services/common/format.service';
 
 @Component({
   selector: 'app-month-info',
@@ -65,7 +66,11 @@ export class MonthInfoComponent implements OnInit {
     this.on_toggle_water_option.emit()
   }
 
-  constructor() { }
+  to_vnd(value: number) {
+    return this.format.to_vnd(value);
+  }
+
+  constructor(private format: FormatService) { }
 
   ngOnInit() {
   }

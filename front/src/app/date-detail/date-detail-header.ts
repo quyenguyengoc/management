@@ -1,4 +1,5 @@
 import { EVENTTYPES } from '../shared/event-types';
+import { DatePipe } from '@angular/common';
 
 export const HEADERS = {
   mode: 'external',
@@ -9,7 +10,8 @@ export const HEADERS = {
     },
     price: {
       title: 'Price',
-      filter: false
+      filter: false,
+      valuePrepareFunction: (value: number) => { return Intl.NumberFormat('vi-VN', { style:'currency', currency: 'VND' }).format(value) }
     },
     expense_type: {
       title: 'Type',

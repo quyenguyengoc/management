@@ -31,7 +31,7 @@
       </div>
       <div class="col-sm-3">
           <div class="form-group">
-            <select class="form-control" [(ngModel)]="memo.payer_id"  name="payer_id-{{i}}">
+            <select class="form-control" [(ngModel)]="memo.payer_id" name="payer_id-{{i}}" [class.line-through]="memo.is_destroy">
               <option value="undefined" disabled>Payer ID</option>
               <option *ngFor="let payer of PAYERIDS;" [value]="payer.value" [textContent]="payer.icon"></option>
             </select>
@@ -57,7 +57,7 @@
     </div>
     <div class="row">
       <div class="col-sm-10 text-right font-weight-bold">
-        <h3 [textContent]="current_event.price"></h3>
+        <h3 [textContent]="to_vnd(current_event.price)"></h3>
       </div>
     </div>
   </div>

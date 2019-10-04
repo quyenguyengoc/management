@@ -1,3 +1,15 @@
-<div class="table table-responsive smart-table" *ngIf="source">
-  <ng2-smart-table [settings]="HEADERS" [source]="source" (userRowSelect)="select_event($event)" (delete)="delete_event($event)"></ng2-smart-table>
+<div class="table table-responsive smart-table" *ngIf="selected_date.events">
+  <ng2-smart-table [settings]="HEADERS" [source]="selected_date.events" (userRowSelect)="select_event($event)" (delete)="delete_event($event)"></ng2-smart-table>
+</div>
+<div class="row">
+  <div class="col-sm-11 text-left font-weight-bold">
+    <h3 [textContent]="to_vnd(selected_date.expense.all_day)"></h3>
+  </div>
+  <div class="col-sm-1">
+    <div class="form-group">
+      <button class="btn btn-success" type="button" (click)="toggle_memo(i, 'add')">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
 </div>
