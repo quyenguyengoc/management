@@ -3,7 +3,6 @@ class Api::V1::DateCellsController < ApplicationController
   before_action :load_date_cell, only: [:update, :show]
 
   def index
-    puts "ok"
     render json: {
       month_info: @month_info.to_json,
       dates: @date_cells
