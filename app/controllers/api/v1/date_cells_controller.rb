@@ -31,10 +31,8 @@ class Api::V1::DateCellsController < ApplicationController
     start_at = month_info.day > 10 ? month_info.change(day: 10) : (month_info - 1.month).change(day: 10)
     @month_info = MonthInfo.includes(dates: [events: :memo_details]).find_by(start_at: start_at)
     unless @month_info
-      pre_month = MonthInfo.find_by(start_at: (start_at - 1.month))
       end_at = start_at + 1.month
-      power_number_start = pre_month.power_number_end rescue 0
-      @month_info = MonthInfo.new(start_at: start_at, end_at: end_at, total_budget: Settings.default_total_budget, power_number_start: power_number_start)
+      @month_info = MonthInfo.new(start_at: start_at, end_at: end_at, total_budget: Settings.default_total_budget, power_number_start: 0)
       @month_info.save if @month_info.valid?
       [*start_at...end_at].each do |date|
         date_cell = @month_info.dates.create!(date_cell: date)
